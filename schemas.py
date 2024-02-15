@@ -8,6 +8,7 @@ class GenreURLChoices(Enum):
     ELECTRONIC = 'electronic'
     METAL = 'metal'
     HIP_HOP = 'hip-hop'
+    
 
 
 class Album(BaseModel):
