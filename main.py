@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from schemas import GenreURLChoices, BandBase, Album, BandCreate, BandwithID
+from schemas import GenreURLChoices, GenreChoices, BandBase, Album, BandCreate, BandwithID
 
 
 app = FastAPI()
@@ -10,12 +10,12 @@ app = FastAPI()
 
 
 BANDS = [
-    {'id':1, 'name': 'The kinks', 'genre': 'Rock'},
-    {'id':2, 'name': 'Aphex Twin', 'genre': 'Electronic'},
-    {'id':3, 'name': 'Slowdive', 'genre': 'Shoegaze', 'albums': [
+    {'id':1, 'name': 'The kinks', 'genre': GenreChoices.ROCK},
+    {'id':2, 'name': 'Aphex Twin', 'genre': GenreChoices.ELECTRONIC},
+    {'id':3, 'name': 'Slowdive', 'genre': GenreChoices.METAL, 'albums': [
         {'title': 'Master of Reality', 'release_date': '1971-07-21'}
     ]},
-    {'id':4, 'name': 'Wu Tang Chan', 'genre': 'Hip-Hop'},
+    {'id':4, 'name': 'Wu Tang Chan', 'genre': GenreChoices.HIP_HOP},
 ]
 
 
@@ -27,7 +27,7 @@ async def bands(
     band_list = [BandwithID(**b) for b in BANDS]
     if genre:
         band_list =  [
-            b for b in band_list if b.genre.lower() == genre.value
+            b for b in band_list if b.genre.value.lower() == genre.value
         ]
     if has_albums:
         band_list = [b for b in band_list if len(b.albums) > 0]
