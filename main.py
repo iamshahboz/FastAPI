@@ -16,8 +16,8 @@ async def lifespan(app:FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-@app.get('/bands')
-async def bands(
+@app.get('/bands', description= 'Get all bands')
+async def get_all_bands(
     genre: GenreURLChoices | None=None,
     q: Annotated[str | None, Query(max_length=10)] = None,
     session: Session = Depends(get_session)
@@ -36,19 +36,19 @@ async def bands(
     return band_list
     
 
-@app.get('/bands/{band_id}')
-async def bands(band_id: int,
+@app.get('/bands/{band_id}', description="Get band by id")
+async def get_band_by_id(band_id: int,
                 session: Session = Depends(get_session)
 ) -> Band:
     band = session.get(Band, band_id)
     if band is None:
-        return HTTPException(status_code=404, detail="Band not found")
+        raise HTTPException(status_code=404, detail="Band not found")
     
     return band
     
 
-@app.post('/bands')
-async def create_band(band_data:BandCreate,
+@app.post('/bands', description="Create a new band filling required fields")
+async def create_a_band(band_data:BandCreate,
                       session: Session = Depends(get_session)
                       ) -> Band:
     band = Band(name = band_data.name, genre=band_data.genre)
@@ -70,7 +70,7 @@ async def create_band(band_data:BandCreate,
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
 
 
 
