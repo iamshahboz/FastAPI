@@ -11,6 +11,7 @@ class GenreURLChoices(Enum):
     METAL = 'metal'
     HIP_HOP = 'hip-hop'
 
+
 class GenreChoices(Enum):
     ROCK = 'Rock'
     ELECTRONIC = 'Electronic'
@@ -18,11 +19,11 @@ class GenreChoices(Enum):
     HIP_HOP = 'Hip-hop'
     
 
-
 class AlbumBase(SQLModel):
     title: str
     release_date: date
     band_id: int | None = Field(default=None, foreign_key="band.id")
+
 
 class Album(AlbumBase, table=True):
     id: int = Field(default=None, primary_key=True)
