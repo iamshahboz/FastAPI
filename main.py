@@ -13,18 +13,7 @@ async def lifespan(app:FastAPI):
     yield
 
 
-
-
-
-
 app = FastAPI(lifespan=lifespan)
-
-# don't forget to add type hints
-
-
-
-
-
 
 
 @app.get('/bands')
@@ -57,8 +46,6 @@ async def bands(band_id: int,
     
     return band
     
-    
-
 
 @app.post('/bands')
 async def create_band(band_data:BandCreate,
@@ -67,7 +54,6 @@ async def create_band(band_data:BandCreate,
     band = Band(name = band_data.name, genre=band_data.genre)
     session.add(band)
     
-
     if band_data.albums:
         for album in band_data.albums:
             album_obj = Album(
@@ -75,16 +61,17 @@ async def create_band(band_data:BandCreate,
                 band = band
             )
             session.add(album_obj)
-
-
     session.commit()
     session.refresh(band)
     return band 
 
 
+
+
+
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    
+
 
 
 
