@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from db import init_db, get_session
 from sqlmodel import Session, select
 from typing import Annotated
+import uvicorn
 
 
 @asynccontextmanager
@@ -79,6 +80,11 @@ async def create_band(band_data:BandCreate,
     session.commit()
     session.refresh(band)
     return band 
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+    
 
 
 
