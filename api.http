@@ -3,10 +3,21 @@ Content-Type: application/json
 
 {
     "name": "Boards of Canada",
-    "genre": "electronic"
+    "genre": "electronic",
+    "albums": [
+        {
+            "title": "Tomorrow's Harvest",
+            "release_date": "2013-01-01"
+        },
+        {
+            "title": "Music has the right to children",
+            "release_date": "1998-01-01"
+        }
+
+    ]
+    
 
     
 }
-
-### 
-GET http://localhost:8000/bands?genre=electronic
+###
+GET http://localhost:8000/bands/1
